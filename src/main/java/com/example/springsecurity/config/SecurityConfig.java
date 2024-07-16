@@ -29,9 +29,10 @@ public class SecurityConfig {
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
-                        .loginProcessingUrl("/loginProc")
-                        .defaultSuccessUrl("/", true)
+                        .loginPage("/loginForm")
+                        .loginProcessingUrl("/login") // login 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행
+//                        .usernameParameter("username2") 여기서 파라미터 명을 변경하면 된다
+                        .defaultSuccessUrl("/", true) //로그인 성공시 메인페이지 이동
                         .permitAll()
                 );
 
