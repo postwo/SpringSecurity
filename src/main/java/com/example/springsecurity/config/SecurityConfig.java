@@ -10,7 +10,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity // 필터 체인 관리 시작 어노테이션
-@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true) // 특정 주소 접근시 권한 및 인증을 위한 어노테이션 활성화
+@EnableMethodSecurity(prePostEnabled = true, securedEnabled = true) //securedEnabled,prePostEnabled 어노테이션 활성화 // 특정 주소 접근시 권한 및 인증을 위한 어노테이션 활성화
 public class SecurityConfig {
 
     @Bean
@@ -22,6 +22,8 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                //hasRole 및 hasAnyRole 메서드를 사용할 때 ROLE_ 접두사를 자동으로 추가
+                //그리고 다른데에서 권한부여 할때는 꼭 ROLE_ 붙여서넣기
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/user/**").authenticated()
                         .requestMatchers("/manager/**").hasAnyRole("ADMIN", "MANAGER")
