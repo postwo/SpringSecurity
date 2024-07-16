@@ -10,18 +10,18 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/security?serverTimezone=Asia/Seoul
-    username: cos
-    password: cos1234
+    url: jdbc:mysql://localhost:3307/${database}?serverTimezone=Asia/Seoul
+    username: ${name}
+    password: ${pw}
 
-  mvc:
-    view:
-      prefix: /templates/
-      suffix: .mustache
+#  mvc: #뷰리졸버 설정 이거는 mustach라이브러리가 알아서 설정해줌
+#    view:
+#      prefix: /templates/
+#      suffix: .mustache
 
   jpa:
     hibernate:
-      ddl-auto: update #create update none
+      ddl-auto: create #create update none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     show-sql: true
