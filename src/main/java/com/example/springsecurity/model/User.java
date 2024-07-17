@@ -20,6 +20,11 @@ public class User {
     private String password;
     private String email;
     private String role; //USER, ADMIN
+
+    //oauth
+    private String provider; //google
+    private String providerId; //google에서 사용하는 아이디
+
     @CreationTimestamp
     private Timestamp createDate;
 }
