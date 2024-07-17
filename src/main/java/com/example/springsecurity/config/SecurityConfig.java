@@ -38,6 +38,12 @@ public class SecurityConfig {
                         .permitAll()
                 );
 
+        http    .oauth2Login(oauth2 -> oauth2
+                .loginPage("/loginForm") // OAuth2 로그인 페이지 설정
+                .defaultSuccessUrl("/", true) // OAuth2 로그인 성공시 메인페이지 이동
+                 );
+
+
         return http.build();
     }
 
