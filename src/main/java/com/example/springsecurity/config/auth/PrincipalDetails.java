@@ -9,19 +9,32 @@ package com.example.springsecurity.config.auth;
 // Security session => Authentication => UserDetails(PrincipalDetails)
 
 import com.example.springsecurity.model.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
-public class PrincipalDetails implements UserDetails {
+@Data
+public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user; // 콤포지션
+    private Map<String,Object> attributes;
 
+    //일반 로그인 생성자
     public PrincipalDetails(User user){
         this.user =user;
     }
+
+    //oauth로그인 생성자
+    public PrincipalDetails(User user,Map<String,Object> attributes){
+        this.user =user;
+        this.attributes = attributes;
+    }
+
 
 
     //해당 user의 권한을 리턴하는 곳 == user에 있는 권한은String 타입이여서 여기서 못쓰기 때문에 변경해준다
@@ -70,5 +83,18 @@ public class PrincipalDetails implements UserDetails {
         // 우리 사이트 1년 동안 회언이 로그인을 안하면 휴면 계정으로 하기로 함
         // 현재시간 - 로긴시간 => 1년을 초과하면 retun을 false로 반환
         return true;
+    }
+
+
+    //2개는 oauth2를 여기서 오버라이딩 해준다
+    @Override
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+//        return attributes.get("sub"); // oauth에 있는 아이디(sub)값이다
+        return null;
     }
 }

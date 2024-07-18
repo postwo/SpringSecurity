@@ -1,6 +1,7 @@
 package com.example.springsecurity.config;
 
 import com.example.springsecurity.config.oauth.PrincipalOauth2UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,16 +14,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity // 필터 체인 관리 시작 어노테이션
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true) //securedEnabled,prePostEnabled 어노테이션 활성화 // 특정 주소 접근시 권한 및 인증을 위한 어노테이션 활성화
+@RequiredArgsConstructor
 public class SecurityConfig {
 
     @Autowired
     private PrincipalOauth2UserService principalOauth2UserService;
 
 
-    @Bean
-    public BCryptPasswordEncoder encodePwd() {
-        return new BCryptPasswordEncoder();
-    }
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
